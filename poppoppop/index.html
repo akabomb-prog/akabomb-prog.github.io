@@ -1,0 +1,74 @@
+<html>
+	<head>
+		<title>pop pop pop pop pop pop pop</title>
+		<style>
+			* {
+				margin: 0px;
+			}
+			img {
+				position: absolute;
+				top: 50%; right: 50%;
+				transform: translate(50%,-50%);
+				
+				user-drag: none; 
+				user-select: none;
+				-moz-user-select: none;
+				-webkit-user-drag: none;
+				-webkit-user-select: none;
+				-ms-user-select: none;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<script>
+		console.log("What's poppin'?");
+		
+		function Sound(src)
+		{
+			this.sound = document.createElement("audio");
+			this.sound.src = src;
+			this.sound.setAttribute("preload", "auto");
+			this.sound.setAttribute("controls", "none");
+			this.sound.style.display = "none";
+			document.body.appendChild(this.sound);
+			this.play = function()
+			{
+				this.sound.play();
+			}
+			this.stop = function()
+			{
+				this.sound.pause();
+			}
+		}
+		
+		var pop = new Sound("./o0.wav");
+		var cat = document.createElement("img");
+		cat.align = "middle";
+		cat.src = "./pCp.jpg";
+		
+		cat.width = 512;
+		cat.height = 512;
+		
+		cat.onmousedown = function ()
+		{
+			pop.stop();
+			cat.src = "./pOp.jpg";
+			pop.sound.src = "./o" + Math.floor(Math.random() * 11) + ".wav";
+			pop.play();
+		};
+		cat.onmouseup = function ()
+		{
+			if (cat.src.endsWith("pCp.jpg")) return;
+			
+			pop.stop();
+			cat.src = "./pCp.jpg";
+			pop.sound.src = "./c" + Math.floor(Math.random() * 12) + ".wav";
+			pop.play();
+		};
+		cat.onmouseleave = cat.onmouseup;
+		
+		document.body.insertBefore(cat, document.body.childNodes[0]);
+		</script>
+	</body>
+</html>
