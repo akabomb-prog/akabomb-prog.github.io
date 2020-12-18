@@ -52,14 +52,14 @@
 		{
 			return false;
 		};
-		cat.onmousedown = function ()
+		cat.onpointerdown = function ()
 		{
 			pop.pause();
 			cat.src = "./pOp.jpg";
 			pop.src = "./o" + Math.floor(Math.random() * 11) + ".wav";
 			play();
 		};
-		cat.onmouseup = function ()
+		cat.onpointerup = function ()
 		{
 			if (cat.src.endsWith("pCp.jpg")) return;
 			
@@ -68,7 +68,7 @@
 			pop.src = "./c" + Math.floor(Math.random() * 12) + ".wav";
 			play();
 		};
-		cat.onmouseleave = cat.onmouseup;
+		cat.onpointerleave = cat.onpointerup;
 		
 		document.body.insertBefore(cat, document.body.childNodes[0]);
 		</script>
