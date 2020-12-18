@@ -35,7 +35,6 @@ cat.oncontextmenu = function ()
 };
 cat.onpointerdown = function ()
 {
-	pop.pause();
 	cat.src = "./pOp.jpg";
 	pop.src = "./o" + Math.floor(Math.random() * 11) + ".wav";
 	play();
@@ -44,7 +43,6 @@ cat.onpointerup = function ()
 {
 	if (cat.src.endsWith("pCp.jpg")) return;
 	
-	pop.pause();
 	cat.src = "./pCp.jpg";
 	pop.src = "./c" + Math.floor(Math.random() * 12) + ".wav";
 	play();
