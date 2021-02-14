@@ -5,12 +5,17 @@ function totalFrames(sw,sh, iw,ih)
 
 function frameToFL(x, total)
 {
+	if (isNaN(x) || x == '')
+	{
+		return NaN;
+	}
+	
 	return 1/total * (x + 2);
 }
 
 function pixToFL(x)
 {
-	if (isNaN(x) || typeof x !== 'number')
+	if (isNaN(x) || x == '')
 	{
 		return NaN;
 	}
