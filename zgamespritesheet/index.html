@@ -1,0 +1,58 @@
+<html>
+<head>
+	<title>SpriteSheet</title>
+	<script src="calculator.js"></script>
+	<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+	<script>
+		function ensureVal(v)
+		{
+			return (v == Infinity || isNaN(v)) ? "Check your values" : v;
+		}
+		
+		function getVal(id)
+		{
+			var el = document.getElementById(id);
+			return el == null ? null : el.value;
+		}
+		
+		function calcAll()
+		{
+			var sw = getVal("s_width"),
+				sh = getVal("s_height"),
+				iw = getVal("i_width"),
+				ih = getVal("i_height");
+			
+			/* Tile Width and Height */
+			var fl_width = pixToFL(sw),
+				fl_height = pixToFL(sh);
+			fl_width = ensureVal(fl_width);
+			fl_height = ensureVal(fl_height);
+			
+			/* Manual Slider */
+			var index = getVal("index");
+			
+			var slider = frameToFL(index, totalFrames(sw,sh, iw,ih));
+			slider = ensureVal(slider);
+			
+			console.log(`${sw} ${sh} ${iw} ${ih}`);
+			document.getElementById("results").textContent = `"Tile Width":\n${fl_width}\n"Tile Height":\n${fl_height}\n"Manual Slider":\n${slider}`;
+		}
+	</script>
+	
+	<h1>SpriteSheet for ZGameEditor Visualizer</h1>
+	<p>SpriteSheet is a modification of the ImageTileSprite effect that takes a custom value that can also be not a power of 2.</p>
+	<p>The current version can be found <a href="SpriteSheet.zgeproj" download>here.</a> (right click -> Save link as... if it doesn't work)</p>
+	<hr />
+	<p>Since the effect requires custom values to be input, and FL Studio doesn't allow values greater than 1, this is a calculator for figuring out what values to paste.</p>
+	<hr />
+	<p>Sprite width: <input id="s_width" type="text" size="8" autocomplete="off" />, sprite height: <input id="s_height" type="text" size="8" /></p>
+	<p>Image width: <input id="i_width" type="text" size="8" autocomplete="off" />, image height: <input id="i_height" type="text" size="8" /></p>
+	<p>Index: <input id="index" type="text" size="8" autocomplete="off" /></p>
+	<button onclick="calcAll();">Calculate all</button>
+	<hr />
+	<textarea readonly id="results" cols="50" rows="8">Results will appear here...</textarea>
+</body>
+</html>
