@@ -1,11 +1,11 @@
 function totalFrames(sw,sh, iw,ih)
 {
-	return Math.floor(iw / sw) * Math.floor(ih / sh);
+	return Math.round(iw / sw) * Math.round(ih / sh);
 }
 
 function frameToFL(x, total)
 {
-	if (isNaN(x) || x == '')
+	if (isNaN(x) || typeof x !== 'number')
 	{
 		return NaN;
 	}
@@ -15,7 +15,7 @@ function frameToFL(x, total)
 
 function pixToFL(x)
 {
-	if (isNaN(x) || x == '')
+	if (isNaN(x) || typeof x !== 'number')
 	{
 		return NaN;
 	}

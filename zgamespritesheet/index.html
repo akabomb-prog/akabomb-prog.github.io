@@ -15,7 +15,7 @@
 		function getVal(id)
 		{
 			var el = document.getElementById(id);
-			return el == null ? null : el.value;
+			return el == null ? null : parseFloat(el.value);
 		}
 		
 		function calcAll()
