@@ -7,7 +7,7 @@
 /* rat */
 #rat {
 	width:200px;
-	cursor:url(hanada.png), auto;
+	cursor:url(cursor/hanada.png), auto;
 }
 
 /* Elements that can't be selected */
