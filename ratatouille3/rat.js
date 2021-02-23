@@ -21,7 +21,7 @@ function handleRat(event)
 {
 	if (ratinplace) return;
 	
-	ratinplace = false;
+	ratinplace = true;
 	
 	var x = event.clientX, y = event.clientY;
 	var ratwidth = rat.style.width.substring(0, rat.style.width.length - 2);
