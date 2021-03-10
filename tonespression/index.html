@@ -1,0 +1,101 @@
+
+<html>
+	<head>
+		<title>Tonespression</title>
+		<link rel="stylesheet" href="./style.css">
+		<script src="./sound.js"></script>
+		<script src="./util.js"></script>
+		<script>
+			var amplitude = 0.2;
+			var buffer = 48000;
+			
+			var processed = 0;
+			
+			var _FUNCTION;
+			
+			function refresh()
+			{
+				_FUNCTION = Function(document.getElementById("code").value);
+				clearInterval(_AUDIO);
+				_AUDIO = setInterval(function ()
+				{
+					sound_output(buffer, function (channel, i, buf, global_object)
+					{
+						return _FUNCTION.call(null, channel, i, buf, global_object) * amplitude;
+					});
+				}, buffer / audio_rate * 1000);
+			}
+			
+			function clear()
+			{
+				document.getElementById("code").value = "";
+				refresh();
+			}
+			
+			function init()
+			{
+				// Do necessary init stuff
+				refresh();
+				
+				document.getElementById("arate").textContent = audio_rate;
+				
+				subscribe_enter(document.getElementById("buffer"), function ()
+				{
+					buffer = parseInt(document.getElementById("buffer").value);
+					// If buffer is NaN, default to 1 second
+					buffer = isNaN(buffer) ? audio_rate : buffer;
+					refresh();
+				});
+				subscribe_enter(document.getElementById("amp"), function ()
+				{
+					amplitude = parseFloat(document.getElementById("amp").value);
+					// If amplitude is NaN, default to 0.2
+					amplitude = isNaN(amplitude) ? 0.2 : amplitude;
+					refresh();
+				});
+			}
+			
+			var _AUDIO = setInterval(function ()
+			{
+				sound_output(buffer, function (channel, i, buf, global_object)
+				{
+					return _FUNCTION.call(null, channel, i, buf, global_object) ?? 0 * amplitude;
+				});
+			}, buffer / audio_rate * 1000);
+		</script>
+	</head>
+	
+	<body onload="init();">
+		<!-- This prevents zooming on mobile -->
+		<span>Sample rate: <span id="arate">0</span>Hz</span>
+		<br />
+		<span>Buffer size: <input id="buffer" type="text" size="8" autocomplete="off" value="48000"/> samples</span>
+		<br />
+		<span>Amplitude: <input id="amp" type="text" size="8" autocomplete="off" value="0.2" />f</span>
+		<hr />
+		<textarea id="code" cols="90" rows="25">// Simple arpeggiator with a supersaw waveform and a simple decay envelope
+
+// Render-time constants
+const channel = arguments[0];
+const seek = arguments[1];
+const buf = arguments[2];
+const realSeek = seek - processed;
+const seconds = realSeek / audio_rate;
+
+// Sawtooth wave generator
+function saw(freq, phase = 0)
+{
+ var uBound = audio_rate / freq;
+ return (((seek + phase) % uBound) / uBound) - 0.5;
+}
+
+// 55Hz on first 0.5 seconds, 110Hz on the other 0.5
+const freq = (seconds > 0.5) ? 110 : 55;
+
+return lerp(saw(freq, channel * -48), saw(freq * 1.005, channel * 48), 0.5)
+ * sqr(lerp(1, 0, clamp((seconds * 2) % 1, 0, 1)));
+</textarea>
+		<hr />
+		<button onpointerdown="clear();">Clear</button> <button onpointerdown="refresh();">Compile</button>
+	</body>
+</html>
