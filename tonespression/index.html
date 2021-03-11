@@ -73,12 +73,12 @@
 		<br />
 		<span>Amplitude: <input id="amp" type="text" size="8" autocomplete="off" value="0.2" />f</span>
 		<hr />
-		<textarea id="code" cols="90" rows="25">// Simple arpeggiator with a supersaw waveform and a simple decay envelope
+		<textarea id="code" cols="90" rows="25">// Simple arpeggiator with supersaw and triangle waveforms and a simple decay envelope
 
 // Render-time constants
 const channel = arguments[0];
 const seek = arguments[1];
-const buf = arguments[2];
+const prev = arguments[2];
 const realSeek = seek - processed;
 const seconds = realSeek / audio_rate;
 
@@ -89,11 +89,21 @@ function saw(freq, phase = 0)
  return (((seek + phase) % uBound) / uBound) - 0.5;
 }
 
+// Triangle wave generator
+function tri(freq, phase = 0)
+{
+ return Math.abs(saw(freq, phase)) * 2 - 0.5;
+}
+
 // 55Hz on first 0.5 seconds, 110Hz on the other 0.5
 const freq = (seconds > 0.5) ? 110 : 55;
 
-return lerp(saw(freq, channel * -48), saw(freq * 1.005, channel * 48), 0.5)
- * sqr(lerp(1, 0, clamp((seconds * 2) % 1, 0, 1)));
+// Generate sawtooth waves
+const saws = (saw(freq, channel * -48) + saw(freq * 1.005, channel * 48)) / 1.5;
+
+// Saws + triangle wave
+return avg(saws, tri(freq * 3.02, channel * -16) * 0.5)
+ * sqr(lerp(1, 0.4, clamp((seconds * 2) % 1, 0, 1)));
 </textarea>
 		<hr />
 		<button onpointerdown="clear();">Clear</button> <button onpointerdown="refresh();">Compile</button>

@@ -7,8 +7,6 @@ function sound_output(bufSize, pr)
 	// Create an empty three-second stereo buffer at the sample rate of the AudioContext
 	var myArrayBuffer = audioCtx.createBuffer(2, bufSize, audioCtx.sampleRate);
 	
-	var global_object = {};
-	
 	// Fill the buffer
 	for (var channel = 0; channel < myArrayBuffer.numberOfChannels; channel++)
 	{
@@ -17,7 +15,7 @@ function sound_output(bufSize, pr)
 		for (var i = 0; i < myArrayBuffer.length; i++)
 		{
 			// audio needs to be in [-1.0; 1.0]
-			nowBuffering[i] = pr(channel, processed + i, nowBuffering, global_object) ?? 0;
+			nowBuffering[i] = pr(channel, processed + i, nowBuffering[i - 1] ?? 0) ?? 0;
 		}
 	}
 	

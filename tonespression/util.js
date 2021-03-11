@@ -14,6 +14,11 @@ function subscribe_enter(input, callback = function (event) { alert("Enter press
 	});
 }
 
+function avg(...x)
+{
+	return x.reduce((a, b) => a + b) / x.length;
+}
+
 function lerp(a, b, t)
 {
 	return a + (b - a) * t;
@@ -27,4 +32,9 @@ function clamp(x, a, b)
 function sqr(x)
 {
 	return x * x;
+}
+
+function quantize(val, step)
+{
+	return Math.floor(val / step) * step;
 }
