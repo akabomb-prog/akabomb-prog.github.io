@@ -38,3 +38,11 @@ function quantize(val, step)
 {
 	return Math.floor(val / step) * step;
 }
+
+var tet = Math.pow(2, 1 / 12);
+var reference = 440;
+
+function to_12tet(note)
+{
+	return 440 * Math.pow(tet, note - 49);
+}

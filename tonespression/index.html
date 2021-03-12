@@ -95,16 +95,20 @@ function tri(freq, phase = 0)
  return Math.abs(saw(freq, phase)) * 2 - 0.5;
 }
 
-// 55Hz on first 0.5 seconds, 110Hz on the other 0.5
-const freq = (seconds > 0.5) ? 110 : 55;
+// Notes and conversion of notes to frequencies
+const seq = [ 13, 25, 13, 11 ];
+const freq = to_12tet(seq[Math.floor(seconds * 4)]);
 
 // Generate sawtooth waves
 const saws = (saw(freq, channel * -48) + saw(freq * 1.005, channel * 48)) / 1.5;
 
 // Saws + triangle wave
-return avg(saws, tri(freq * 3.02, channel * -16) * 0.5)
- * sqr(lerp(1, 0.4, clamp((seconds * 2) % 1, 0, 1)));
-</textarea>
+const sig = avg(saws, tri(freq * 3.02, channel * -16) * 0.5);
+
+// Envelope
+const env = sqr(clamp((seconds * 8) % 1, 0, 1));
+
+return clamp(sig * sqr(lerp(1, 0.1, env)), -1, 1);</textarea>
 		<hr />
 		<button onpointerdown="clear();">Clear</button> <button onpointerdown="refresh();">Compile</button>
 	</body>
