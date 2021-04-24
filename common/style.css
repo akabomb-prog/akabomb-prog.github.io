@@ -1,0 +1,50 @@
+/* Common style.css */
+/* Made for akabomb-prog.github.io */
+
+.nonselectable {
+	top: 0;
+	left: 0;
+	position: absolute;
+	margin: 0px;
+	
+	user-drag: none; 
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+.centered {
+	position: absolute;
+	top: 50%; right: 50%;
+	transform: translate(50%,-50%);
+}
+
+.vslider {
+	height: 256px;
+	transform: rotate(270deg);
+	transform-origin: center left;
+	
+	-moz-transform: rotate(270deg);
+}
+
+/* DIVs */
+
+.simple1 {
+	border: 1px solid;
+	border-radius: 4px;
+	padding: 10px;
+	box-shadow:0 0 8px grey;
+}
+
+/* Filters */
+
+.saturated { filter: saturate(3); }
+.grayscaled { filter: grayscale(100%); }
+.fried { filter: contrast(1000%); }
+.dark { filter: brightness(0.5); }
+.bright { filter: brightness(2); }
+.blurred { filter: blur(4px); }
+.inverted { filter: invert(100%); }
+.sepiad { filter: sepia(100%); }

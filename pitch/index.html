@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Simple HTML Audio Player</title>
+	<link rel="stylesheet" type="text/css" href="../common/style.css">
+	<script src="pitch.js"></script>
+</head>
+<body onload="updateParams();">
+	<div class="centered simple1" style="width:40%;height:30%">
+		<span>Playback speed: <input type="number" id="speed" min="10" max="1600" value="100" onchange="updateParams();"></span>
+		<br />
+		<progress style="width:100%;position:relative;" id="speedBar" value="100" max="100">100%</progress>
+		<br />
+		<span><input type="checkbox" id="preserve" onchange="updateParams();"> Preserve pitch</span>
+		<br />
+		<span>Volume: <input type="number" id="volume" min="0" max="100" value="80" onchange="updateParams();"></span>
+		<br />
+		<div style="position:absolute;margin:10px;bottom:0;right:0;">
+			<button style="font-size:18px;" onpointerdown="playSound();">Play</button>
+			<button style="font-size:18px;" onpointerdown="stopSound();">Stop</button>
+		</div>
+	</div>
+</body>
+</html>
