@@ -17,16 +17,30 @@ function getFloat(id)
 	return document.getElementById(id).value ?? 1.0;
 }
 
+// Get textbox value
+// If "value" does not exist, return ""
+function getString(id)
+{
+	return document.getElementById(id).value ?? "";
+}
+
 var sound = document.createElement("audio");
 sound.setAttribute("preload", "auto");
 sound.setAttribute("controls", "none");
 sound.style.display = "none";
 
+function init()
+{
+	updateParams();
+	document.getElementById("sound").value = sound.src
+	document.getElementById("speed").value = sound.playbackRate * 100;
+	document.getElementById("preserve").checked = sound.preservesPitch;
+}
+
 function playSound()
 {
-	sound.src = getQueryParam("sound") ?? "./barney.wav";
-	sound.play();
 	updateParams();
+	sound.play();
 }
 
 function stopSound()
@@ -36,15 +50,25 @@ function stopSound()
 
 function updateParams()
 {
-	var speed = Math.max(0.0625, getFloat("speed"));
+	var src = getQueryParam("sound") || getString("sound") || "Realtek_Test_Noise.wav";
+	
+	if (sound.src !== src)
+	{
+		// Setting src, even to the same value, stops the playback
+		sound.src = getQueryParam("sound") || getString("sound") || "Realtek_Test_Noise.wav";
+	}
+	
+	var speed = getQueryParam("speed") || Math.max(0.0625, getFloat("speed"));
 	sound.playbackRate = speed / 100;
 	
 	var speedBar = document.getElementById("speedBar");
 	speedBar.value = speed;
 	speedBar.textContent = speed + '%';
 	
-	sound.preservesPitch = getBool("preserve");
+	sound.preservesPitch = getQueryParam("preserve") || getBool("preserve");
 	
 	var volume = Math.max(0, getFloat("volume"));
 	sound.volume = volume / 100;
+	
+	sound.loop = getQueryParam("loop") || getBool("loop");
 }
