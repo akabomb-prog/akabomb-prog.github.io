@@ -35,6 +35,7 @@ function init()
 	document.getElementById("sound").value = sound.src
 	document.getElementById("speed").value = sound.playbackRate * 100;
 	document.getElementById("preserve").checked = sound.preservesPitch;
+	document.getElementById("loop").checked = sound.loop;
 }
 
 function playSound()
@@ -50,15 +51,7 @@ function stopSound()
 
 function updateParams()
 {
-	var src = getQueryParam("sound") || getString("sound") || "Realtek_Test_Noise.wav";
-	
-	if (sound.src !== src)
-	{
-		// Setting src, even to the same value, stops the playback
-		sound.src = getQueryParam("sound") || getString("sound") || "Realtek_Test_Noise.wav";
-	}
-	
-	var speed = getQueryParam("speed") || Math.max(0.0625, getFloat("speed"));
+	var speed = parseFloat(getQueryParam("speed")) || Math.max(0.0625, getFloat("speed"));
 	sound.playbackRate = speed / 100;
 	
 	var speedBar = document.getElementById("speedBar");
@@ -70,5 +63,15 @@ function updateParams()
 	var volume = Math.max(0, getFloat("volume"));
 	sound.volume = volume / 100;
 	
-	sound.loop = getQueryParam("loop") || getBool("loop");
+	sound.loop = (getQueryParam("loop") == "true") || getBool("loop");
+	
+	var src = getQueryParam("sound") || getString("sound") || "Realtek_Test_Noise.wav";
+	
+	if (sound.src !== src)
+	{
+		// Setting src, even to the same value, stops the playback
+		sound.src = src;
+	}
+	
+	console.log(src, speed, volume, (getQueryParam("loop") == true) || getBool("loop"));
 }
