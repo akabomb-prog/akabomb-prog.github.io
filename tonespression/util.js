@@ -44,5 +44,5 @@ var reference = 440;
 
 function to_12tet(note)
 {
-	return 440 * Math.pow(tet, note - 49);
+	return reference * Math.pow(tet, note - 49);
 }
