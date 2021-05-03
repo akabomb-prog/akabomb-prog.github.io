@@ -73,24 +73,45 @@ function initCanvas(img)
 
 function init()
 {
+	mImage = document.getElementById("memeImage");
 	canvas = document.getElementById("imgCanvas");
 	ctx = canvas.getContext("2d");
 	
 	updateParams();
 }
 
+function updateImage()
+{
+	initCanvas(mImage);
+	
+	drawImpact(topText, topSize, strokeSize, canvas.width / 2, topSize);
+	drawImpact(bottomText, bottomSize, strokeSize, canvas.width / 2, canvas.height - bottomSize * 0.1875);
+}
+
 function loadImage(event)
 {
-	mImage = document.getElementById("memeImage");
 	mImage.src = URL.createObjectURL(event.target.files[0]);
 	
-	mImage.onload = function ()
-	{
-		initCanvas(mImage);
-		
-		drawImpact(topText, topSize, strokeSize, canvas.width / 2, topSize);
-		drawImpact(bottomText, bottomSize, strokeSize, canvas.width / 2, canvas.height - bottomSize * 0.1875);
-	};
+	mImage.onload = updateImage;
+}
+
+function downloadImage()
+{
+	if (mImage.src === '') return;
+	
+	// Get canvas data
+	var data = canvas.toDataURL("image/png");
+	
+	// Create an <a> element and assign the data
+	var link = document.createElement("a");
+	link.download = "impact.png";
+	link.href = data;
+	
+	// Simulate download link press
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+	delete link;
 }
 
 function updateParams()
@@ -104,4 +125,6 @@ function updateParams()
 	bottomText = getString("bottomText");
 	
 	shadow = getBool("shadow");
+	
+	updateImage();
 }
