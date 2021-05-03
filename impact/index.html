@@ -7,7 +7,7 @@
 </head>
 <body onload="init();">
 	<img style="display: none;" id="memeImage">
-	<span>Image URL: <input type="text" id="mImage" onchange="updateParams();"></span>
+	<span><input type="file" accept="image/*" id="file" onchange="loadImage(event)"></span>
 	<br />
 	<span>Top text: <input type="text" id="topText" onchange="updateParams();"> Size: <input type="number" min="1" max="256" value="64" id="topSize" onchange="updateParams();"></span>
 	<br />

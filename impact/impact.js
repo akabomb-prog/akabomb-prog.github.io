@@ -79,6 +79,20 @@ function init()
 	updateParams();
 }
 
+function loadImage(event)
+{
+	mImage = document.getElementById("memeImage");
+	mImage.src = URL.createObjectURL(event.target.files[0]);
+	
+	mImage.onload = function ()
+	{
+		initCanvas(mImage);
+		
+		drawImpact(topText, topSize, strokeSize, canvas.width / 2, topSize);
+		drawImpact(bottomText, bottomSize, strokeSize, canvas.width / 2, canvas.height - bottomSize * 0.1875);
+	};
+}
+
 function updateParams()
 {
 	topSize = getFloat("topSize");
@@ -90,17 +104,4 @@ function updateParams()
 	bottomText = getString("bottomText");
 	
 	shadow = getBool("shadow");
-
-	var newImage = getString("mImage");
-	
-	mImage = document.getElementById("memeImage");
-	mImage.src = newImage == "" ? "../fiddler/fiddler.png" : newImage;
-	
-	mImage.onload = function ()
-	{
-		initCanvas(mImage);
-		
-		drawImpact(topText, topSize, strokeSize, canvas.width / 2, topSize);
-		drawImpact(bottomText, bottomSize, strokeSize, canvas.width / 2, canvas.height - bottomSize * 0.1875);
-	};
 }
