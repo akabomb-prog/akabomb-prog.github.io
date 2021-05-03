@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>HOW IS THIS MAN</title>
+	<link rel="stylesheet" type="text/css" href="../common/style.css">
+	<script src="impact.js"></script>
+</head>
+<body onload="init();">
+	<img style="display: none;" id="memeImage">
+	<span>Image URL: <input type="text" id="mImage" onchange="updateParams();"></span>
+	<br />
+	<span>Top text: <input type="text" id="topText" onchange="updateParams();"> Size: <input type="number" min="1" max="256" value="64" id="topSize" onchange="updateParams();"></span>
+	<br />
+	<span>Bottom text: <input type="text" id="bottomText" onchange="updateParams();" value="HOW IS THIS MAN"> Size: <input type="number" min="1" max="256" value="64" id="bottomSize" onchange="updateParams();"></span>
+	<br />
+	<span>Stroke size: <input type="number" min="1" max="256" value="4" id="strokeSize" onchange="updateParams();"></span>
+	<br />
+	<span><input type="checkbox" id="shadow" onchange="updateParams();" checked="true"> Shadow</span>
+	<br />
+	<hr />
+	<canvas style="border: 1px solid;" id="imgCanvas" width="500" height="300">
+</body>
+</html>
