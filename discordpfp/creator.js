@@ -19,7 +19,6 @@ function drawThing()
 
         ctx.fillStyle = thingCSS;
         ctx.drawImage(thing, 128-77, 128-56);
-        // ctx.drawImage(thing, 128-77, 128-77);
 
     ctx.restore();
 }
@@ -43,11 +42,11 @@ function updateParams()
 
     console.log("updated parameters");
 
+    drawAll();
+
     createDownloadLink();
     
     console.log("download link created and placed before", canvas.nextSibling);
-
-    drawAll();
 }
 
 function init()
@@ -55,8 +54,11 @@ function init()
 	canvas = document.getElementById("pfp");
 	ctx = canvas.getContext("2d");
     thing.src = "./discord_logo.png";
-    thing.onload = drawAll;
-    // thing.src = "./thing_clean_white.png";
+    thing.onload = function ()
+    {
+        drawAll();
+        createDownloadLink();
+    };
 	
 	updateParams();
 }
@@ -81,5 +83,5 @@ function createDownloadLink()
     link.textContent = "Download";
 	
 	// Put download link after canvas
-	canvas.insertBefore(link, canvas.nextSibling);
+	document.body.insertBefore(link, canvas.nextElementSibling.nextElementSibling);
 }
