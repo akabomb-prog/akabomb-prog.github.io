@@ -1,7 +1,6 @@
 /// discord pfp creator lol
 
-var bgCSS = "hsl(214, 8%, 50%)",
-    thingCSS = "white";
+var bgCSS = "hsl(214, 8%, 50%)";
 
 var canvas;
 var ctx;
@@ -17,7 +16,6 @@ function drawThing()
 {
     ctx.save();
 
-        ctx.fillStyle = thingCSS;
         ctx.drawImage(thing, 128-77, 128-56);
 
     ctx.restore();
@@ -38,8 +36,6 @@ function drawAll()
 function updateParams()
 {
     bgCSS = getString("bg_css");
-    thingCSS = getString("thing_css");
-
     console.log("updated parameters");
 
     drawAll();
