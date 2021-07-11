@@ -43,6 +43,10 @@ function updateParams()
 
     console.log("updated parameters");
 
+    createDownloadLink();
+    
+    console.log("download link created and placed before", canvas.nextSibling);
+
     drawAll();
 }
 
@@ -57,8 +61,15 @@ function init()
 	updateParams();
 }
 
-function downloadImage()
+function createDownloadLink()
 {
+    // Remove the previous download link, if exists
+    var prevDLLink = document.getElementById("dl_link");
+    if (prevDLLink !== null)
+    {
+	    document.body.removeChild(prevDLLink);
+    }
+
 	// Get canvas data
 	var data = canvas.toDataURL("image/png");
 	
@@ -66,10 +77,9 @@ function downloadImage()
 	var link = document.createElement("a");
 	link.download = "discord.png";
 	link.href = data;
+    link.id = "dl_link";
+    link.textContent = "Download";
 	
-	// Simulate download link press
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
-	delete link;
+	// Put download link after canvas
+	canvas.insertBefore(link, canvas.nextSibling);
 }
