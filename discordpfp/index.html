@@ -1,15 +1,31 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <script src="../common/values.js"></script>
+    <script src="./creator.js"></script>
+    <style>
+        img {
+            cursor: pointer;
+        }
+    </style>
     <title>Discord Default Profile Pictures</title>
 </head>
-<body>
-    <p>// may change over time, as this leads to direct links to discord</p>
-    <img src="https://cdn.discordapp.com/embed/avatars/0.png">
-    <img src="https://cdn.discordapp.com/embed/avatars/1.png">
-    <img src="https://cdn.discordapp.com/embed/avatars/2.png">
-    <img src="https://cdn.discordapp.com/embed/avatars/3.png">
-    <img src="https://cdn.discordapp.com/embed/avatars/4.png">
-    <img src="https://cdn.discordapp.com/embed/avatars/5.png">
+<body onload="init();">
+    <h1>Simple Discord default-style profile picture creator</h1>
+    <p>Background CSS color: <input type="text" id="bg_css" onchange="updateParams();" value="hsl(235, 86%, 65%)"></p>
+    <p>Thing CSS style: <input type="text" id="thing_css" onchange="updateParams();" value="white"></p>
+    <hr />
+
+    <canvas style="border: 1px solid;" id="pfp" width="256" height="256"></canvas>
+    <hr />
+
+    <h1>Preset colors</h2>
+    <p>// may change over time, as these lead to direct links to discord</p>
+    <img src="https://cdn.discordapp.com/embed/avatars/0.png" onpointerdown="changeBG('hsl(235, 86%, 65%)');">
+    <img src="https://cdn.discordapp.com/embed/avatars/1.png" onpointerdown="changeBG('hsl(214, 8%, 50%)');">
+    <img src="https://cdn.discordapp.com/embed/avatars/2.png" onpointerdown="changeBG('hsl(139, 47%, 44%)');">
+    <img src="https://cdn.discordapp.com/embed/avatars/3.png" onpointerdown="changeBG('hsl(38, 96%, 54%)');">
+    <img src="https://cdn.discordapp.com/embed/avatars/4.png" onpointerdown="changeBG('hsl(359, 83%, 59%)');">
+    <img src="https://cdn.discordapp.com/embed/avatars/5.png" onpointerdown="changeBG('hsl(327, 81%, 60%)');">
 </body>
 </html>
